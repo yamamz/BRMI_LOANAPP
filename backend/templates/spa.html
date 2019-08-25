@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}Lending System{% endblock %}
+
+{% block stylesheets %}
+{% if ENV_NAME == "production" %}
+{% render_bundle 'chunk-vendors' 'css' %}
+
+{% endif %}
+{% render_bundle 'app' 'css' %}
+{% endblock %}
+
+{% block body %}
+<div id="app"></div>
+
+{% if ENV_NAME == "production" %}
+  {% render_bundle 'chunk-vendors' 'js' %}
+{% endif %}
+{% render_bundle 'app' 'js' %}
+
+
+{% endblock %}
