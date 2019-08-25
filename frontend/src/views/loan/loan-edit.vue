@@ -444,10 +444,14 @@ export default {
       this.clusters = resclusters.data;
       let resloans= await axios.get('/api/v1/loanss')
       this.loans = resloans.data
-      this.form.loanscheds.forEach(e=>{
-          e.total=(parseFloat(e.interest)+parseFloat(e.principal)).toFixed(2)
-      })
+      this.form.loanscheds.forEach(e => {
+          e.total = (parseFloat(e.interest) + parseFloat(e.principal)).toFixed(
+            2
+          );
     
+      e.datestr = new Date(e.date).toDateString();
+        });
+
     } catch (err) {
       if(err.response.status==401){
           this.$message.error('Tokken is expired and being refresh now please try again')
