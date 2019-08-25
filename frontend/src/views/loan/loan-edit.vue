@@ -380,18 +380,20 @@ export default {
             console.log("3");
           }
           let interest =
-            Math.floor(
+     
               (this.form.principal *
                 this.form.loan_period *
-                (this.form.interest_rate / 100)) /
+                (this.form.interest_rate / 100) /
                 n
             ) * n;
-          this.form.interest = interest;
+          this.form.interest = Math.floor(interest);
           let principal = this.form.principal / n;
           let int = interest / n;
           this.form.loanscheds = [];
           let totaldateinc=0
           this.form.loanscheds=[]
+            let totalinterest=0
+          let totalprin=0
           for (let i = 1; i <= n; i++) {
             let date = new Date(this.form.date_release);
             totaldateinc = totaldateinc + dateinc;
@@ -399,13 +401,30 @@ export default {
             date.setDate(date.getUTCDate() + totaldateinc);
             console.log(date.getDate());
             let datestr = `${date.getUTCMonth()+1}-${date.getUTCDate()}-${date.getFullYear()}`;
-            this.form.loanscheds.push({
+            
+                       if(i != n){
+              this.form.loanscheds.push({
               date: datestr,
               datestr: date.toDateString(),
-              principal: Math.round(principal).toFixed(2),
-              interest: Math.round(int).toFixed(2),
-              total: (Math.round(int) + Math.round(principal)).toFixed(2)
+              principal: Math.floor(principal).toFixed(2),
+              interest: Math.floor(int).toFixed(2),
+              total: (Math.floor(int) + Math.floor(principal)).toFixed(2)
             });
+            }
+            else{
+              this.form.loanscheds.push({
+              date: datestr,
+              datestr: date.toDateString(),
+                principal: ((parseFloat(this.form.principal)).toFixed(2) - parseFloat(totalprin).toFixed(2)).toFixed(2),
+              interest: ((parseFloat(this.form.interest)).toFixed(2) - parseFloat(totalinterest).toFixed(2)).toFixed(2),
+           total: (Math.floor(int) + Math.floor(principal)).toFixed(2)
+            });
+
+            }
+            totalinterest = totalinterest + Math.floor(int)
+            totalprin = totalprin +  Math.floor(principal)
+            console.log("totint "+totalinterest+" ")
+   
           }
         }
       }
