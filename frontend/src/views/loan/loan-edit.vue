@@ -521,8 +521,16 @@ export default {
       this.form = loanres.data;
       let resclusters = await axios.get("/api/v1/clusters");
       this.clusters = resclusters.data;
-      let resloans = await axios.get("/api/v1/loanss");
-      this.loans = resloans.data;
+
+      let resloans= await axios.get('/api/v1/loanss')
+      this.loans = resloans.data
+      this.form.loanscheds.forEach(e => {
+          e.total = (parseFloat(e.interest) + parseFloat(e.principal)).toFixed(
+            2
+          );
+    
+      e.datestr = new Date(e.date).toDateString();
+        });
 
     } catch (err) {
       if (err.response.status == 401) {
