@@ -17,7 +17,7 @@ const Loans = () => import('@/views/loan/loans')
 const LoanAdd = () => import('@/views/loan/loan-add')
 const LoanPayments = () => import('@/views/loan/loanPaymentDetails')
 const LoanEdit = () => import('@/views/loan/loan-edit')
-
+const MemberEdit = () => import('@/views/member/member-edit')
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +68,12 @@ export default new Router({
           name: 'member-add',
           component: MemberAdd,
           meta: { requiresAuth: true }
+        },
+        {
+          path: 'edit/:id',
+          name: 'member-edit',
+          component: MemberEdit,
+          meta: { requiresAuth: true }
         }
       ]
     },
@@ -102,10 +108,7 @@ export default new Router({
           component: LoanEdit,
           meta: { requiresAuth: true }
         }
-        
-        
       ]
     }
-
   ]
 })

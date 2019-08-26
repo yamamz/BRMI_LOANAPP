@@ -5,8 +5,9 @@
             <hr>
                       <v-client-table filterable="true" :columns="columns" :data="datas">
             <div  slot="action" slot-scope="props">
-                 <el-button icon="el-icon-view" round type="primary" size="mini" style="float:right;" @click="view(props.row.id)" >view</el-button>
-                  <el-button icon="el-icon-view" round type="primary" size="mini" style="float:right;" @click="edit(props.row.id)" >edit</el-button>
+                 <el-button icon="el-icon-view" circle type="primary" size="mini" style="float:right;margin-left:10px;" @click="view(props.row.id)" ></el-button>
+
+                  <el-button  icon="el-icon-edit" circle type="success" size="mini" style="float:right;" @click="edit(props.row.id)" ></el-button>
           
           
             </div>
@@ -25,11 +26,10 @@ export default {
     },async created() {
         try{
              let res=await axios.get('/api/v1/loanss')
+//let loans=res.data.sort((a, b) => a.hasMotor > b.hasMotor ? -1 : (a.hasMotor < b.hasMotor ? 1 : 0))
              this.datas=res.data
                this.datas.forEach(el=>{
-
                    el.account_number = el.member.account_number
-              
                      el.fullname = `${el.member.lname}, ${el.member.fname}`
                      let totalinterestPaid=0
                      let totalprincipalpaid=0

@@ -16,3 +16,8 @@
 .el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__label {
     line-height: 10px;
 }
+.table th, .table td {
+    padding: 5px;
+    vertical-align: top;
+    border-top: 1px solid #c8ced3;
+}

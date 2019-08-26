@@ -26,6 +26,7 @@ class LoanPaymentSerializer(serializers.ModelSerializer):
 
 class LoanSchedSerializer(serializers.ModelSerializer):
 	date=serializers.DateField(format="%m-%d-%Y", input_formats=['%m-%d-%Y', 'iso-8601'])
+	id = serializers.IntegerField(required=False)
 	class Meta:
 		model = LoanSchedulePayments
 		fields = '__all__'
@@ -63,7 +64,7 @@ class LoanSerializer(serializers.ModelSerializer):
 		return loan
 
 	def update(self, instance, validated_data):
-		print(instance)
+		#print(instance)
 
 		instance.member = validated_data.get('member', instance.member)
 		instance.loan_type = validated_data.get('loan_type', instance.loan_type)
@@ -82,13 +83,14 @@ class LoanSerializer(serializers.ModelSerializer):
 		instance.save()
 
 		loanscheds = validated_data.get('loanscheds')
-		LoanSchedulePayments.objects.filter(loan=instance).delete()
+		#scheds=LoanSchedulePayments.objects.filter(loan=instance).count()
 
 		for item in loanscheds:
 			print(item)
 			item_id = item.get('id',None)
 			print(item_id)
 			if item_id:
+				print('diri ni agi')
 				inv_item = LoanSchedulePayments.objects.get(pk=item_id)
 				inv_item.date = item.get('date', inv_item.date)
 				inv_item.principal = item.get('principal', inv_item.principal)
