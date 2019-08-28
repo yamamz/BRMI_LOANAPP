@@ -78,6 +78,8 @@ class LoanSerializer(serializers.ModelSerializer):
 		instance.date_release = validated_data.get('date_release', instance.date_release)
 		instance.loan_mode = validated_data.get('loan_mode', instance.loan_mode)
 		instance.payment_period = validated_data.get('payment_period', instance.payment_period)
+		instance.loan_period = validated_data.get('loan_period', instance.loan_period)
+		
 		
 		
 		instance.save()
