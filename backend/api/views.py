@@ -83,5 +83,13 @@ def deleteSchedules(request,id):
         scheds.delete()
         return Response({'is_delete':True})
     return Response({'is_delete':False})
+@api_view(['GET', 'POST'])
+def searchPaymentsAndSchedules(request,id):
+    loan = get_object_or_404(Loan,pk=id)
+    sched_counts=LoanSchedulePayments.objects.filter(loan=loan).count()
+    payments_counts=LoanPayment.objects.filter(loan=loan).count()
+    return Response({'scheds':sched_counts,'payments':payments_counts})
+
+
 
 

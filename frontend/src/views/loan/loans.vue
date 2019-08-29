@@ -9,6 +9,7 @@
 
                   <el-button  icon="el-icon-edit" circle type="success" size="mini" style="float:right;" @click="edit(props.row.id)" ></el-button>
           
+             <el-button  icon="el-icon-delete" circle type="danger" size="mini" style="float:right;" @click="del(props.row.id,props.$index)" ></el-button>
           
             </div>
                     </v-client-table>
@@ -59,6 +60,22 @@ export default {
         },
         edit(id){
             this.$router.push('/app/loan/edit/'+id)
+        },
+        del(id,index){
+            axios.get('/api/v1/searchPayments/'+id).then(response=>{
+                    console.log(response.data.scheds)
+                    if(response.data.scheds == 0 && response.data.payments == 0 ){
+                          axios.delete('/api/v1/loans/'+id+'/').then(res=>{
+                            this.$message.success('Delete successfully')
+                                this.datas.splice(index, 1);     
+                    })
+                    }else{
+                       this.$message.error('Please delete first the payments and schedules')
+        
+                    }
+
+            })
+          
         }
     },
 

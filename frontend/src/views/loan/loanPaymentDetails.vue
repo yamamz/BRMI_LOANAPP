@@ -218,6 +218,7 @@
                 <el-table-column label="action">
                   <template slot-scope="scope">
                     <el-button
+                     :loading="isLoading"
                       style="float:right;"
                       type="danger"
                       @click="deletePayment(scope.row.id,scope.$index)"
@@ -266,6 +267,7 @@
           <el-table-column label="Operations">
             <template slot-scope="scope">
               <el-button
+                :loading="isLoading"
                 size="mini"
                 round
                 icon="el-icon-delete"
@@ -390,23 +392,25 @@ export default {
       return "";
     },
     deleteScheds(index, id) {
+      this.isLoading = true
       axios.delete("/api/v1/loanpaymentscheds/" + id).then(res => {
         this.loan.loanscheds.splice(index, 1);
-        this.$swal({
-          type: "success",
-          title: "Delete",
-          text: "delete Successfully!"
-        });
+       this.$message.success('Delete successfully')
+       this.isLoading = false
+      }).catch(err=>{
+        this.isLoading = flase
+           this.$message.error('there is an error please try again')
       });
     },
     deletePayment(id, index) {
+      this.isLoading = true
       axios.delete("/api/v1/loanpayment/" + id).then(res => {
         this.payments.splice(index, 1);
-        this.$swal({
-          type: "success",
-          title: "Delete",
-          text: "delete Successfully!"
-        });
+       this.$message.success('Delete successfully')
+       this.isLoading = false
+      }).catch(err=>{
+           this.$message.error('there is an error please try again')
+           this.isLoading = false
       });
     },
     printLoanDetails(obj) {
