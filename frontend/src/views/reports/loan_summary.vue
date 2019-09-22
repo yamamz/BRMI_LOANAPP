@@ -180,8 +180,9 @@ export default {
               widths: ['*','*', '*', 30, '*', '*','*'],
               body: [
                 [
-                  { text: "Acct. #", bold: true, style: "tableHeader" },
+                 
                   { text: "Fullname", bold: true, style: "tableHeader" },
+                     { text: "Term", bold: true, style: "tableHeader" },
                   { text: "Schedule", bold: true, style: "tableHeader" },
 
                   {
@@ -262,8 +263,9 @@ export default {
       let totalprin = 0;
       this.datas.forEach((el, i) => {
         dd.content[1].table.body.push([
-           { text: el.member.account_number, style: "tableHeader" },
+          
           { text: el.fullname, style: "tableHeader" },
+           { text: el.loan_period == 1?el.loan_period + ' Month':el.loan_period + ' Months', style: "tableHeader" },
           { text: el.schedule, alignment: "right", style: "tableHeader" },
           { text: el.loan_cycle, alignment: "right", style: "tableHeader" },
            { text: el.date_release, alignment: "right", style: "tableHeader" },
