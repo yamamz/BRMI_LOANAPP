@@ -21,7 +21,7 @@
 export default {
  data(){
         return{
-            columns:['account_number','loan_cycle','fullname','interest_rate','principal','interest','balance','action'],
+            columns:['account_number','date_release','loan_cycle','fullname','interest_rate','principal','interest','balance','action'],
             datas:[]
         }
     },async created() {

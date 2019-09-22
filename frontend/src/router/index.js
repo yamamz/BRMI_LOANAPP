@@ -18,6 +18,7 @@ const LoanAdd = () => import('@/views/loan/loan-add')
 const LoanPayments = () => import('@/views/loan/loanPaymentDetails')
 const LoanEdit = () => import('@/views/loan/loan-edit')
 const MemberEdit = () => import('@/views/member/member-edit')
+const LoanSummaryReport = () => import('@/views/reports/loan_summary')
 Vue.use(Router)
 
 export default new Router({
@@ -106,6 +107,21 @@ export default new Router({
           path: 'edit/:id',
           name: 'loan-edit',
           component: LoanEdit,
+          meta: { requiresAuth: true }
+        }
+      ]
+    },
+    {
+      path: '/app/reports',
+
+      name: 'Reports',
+      component: DefaultContainer,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: 'loan_summary_list',
+          name: 'loan-list-summary',
+          component: LoanSummaryReport,
           meta: { requiresAuth: true }
         }
       ]

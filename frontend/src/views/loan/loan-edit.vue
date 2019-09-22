@@ -285,7 +285,7 @@ export default {
     save() {
       if (this.is_updatescheds) {
         axios
-          .post("/api/v1/deletescheds/" + this.$route.params.id, {})
+          .delete("/api/v1/deletescheds/" + this.$route.params.id, {})
           .then(res => {
             console.log("delete");
           });

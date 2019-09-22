@@ -24,6 +24,8 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('v1/deletescheds/<int:id>',views.deleteSchedules,name='delete-scheds'),
+    path('v1/deletepayments/<int:id>',views.deletePayments,name='delete-payments'),
+    
     path('v1/searchPayments/<int:id>',views.searchPaymentsAndSchedules,name='search-scheds'),
     
 

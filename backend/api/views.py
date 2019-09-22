@@ -74,15 +74,30 @@ class LoanSchedViewset(viewsets.ModelViewSet):
     queryset = LoanSchedulePayments.objects.all()
     serializer_class = LoanSchedSerializer
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'DELETE'])
 @permission_classes((IsAuthenticated,))
 def deleteSchedules(request,id):
     loan = get_object_or_404(Loan,pk=id)
     scheds=LoanSchedulePayments.objects.filter(loan=loan)
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         scheds.delete()
         return Response({'is_delete':True})
     return Response({'is_delete':False})
+
+@api_view(['GET', 'DELETE'])
+@permission_classes((IsAuthenticated,))
+def deletePayments(request,id):
+    loan = get_object_or_404(Loan, pk=id)
+    payments =  LoanPayment.objects.filter(loan=loan)
+    if request.method == 'DELETE':
+        payments.delete()
+        return Response({'is_delete':True})
+    return Response({'is_delete':False})
+    
+
+
+
+
 @api_view(['GET', 'POST'])
 def searchPaymentsAndSchedules(request,id):
     loan = get_object_or_404(Loan,pk=id)

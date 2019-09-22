@@ -58,8 +58,8 @@ export default {
       icon: 'icon-pie-chart',
       children: [{
 
-        name: 'Report',
-        url: '/app/reports/payables',
+        name: 'Loan summary',
+        url: '/app/reports/loan_summary_list',
         icon: 'icon-list'
 
       }]

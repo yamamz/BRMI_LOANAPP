@@ -182,6 +182,14 @@
         <el-card>
           <div slot="header" class="clearfix">
             <el-button
+              type="danger"
+              :disabled="payments.length == 0"
+              style="float:right; margin:2px;"
+              @click="deletePayments"
+              size="small"
+              icon="el-icon-delete"
+            >Delete all payments</el-button>
+            <el-button
               type="success"
               :disabled="form.ending_balance<0"
               style="float:right; margin:2px;"
@@ -218,7 +226,7 @@
                 <el-table-column label="action">
                   <template slot-scope="scope">
                     <el-button
-                     :loading="isLoading"
+                      :loading="isLoading"
                       style="float:right;"
                       type="danger"
                       @click="deletePayment(scope.row.id,scope.$index)"
@@ -383,6 +391,22 @@ export default {
     };
   },
   methods: {
+    deletePayments() {
+      axios.delete("/api/v1/deletepayments/" + this.loan.id).then(res => {
+        if (res.data.is_delete) {
+          this.$message.success("delete all payments successfully");
+          this.payments = [];
+        }
+      });
+    },
+    deleteScheds() {
+      axios.delete("/api/v1/deletescheds/" + this.loan.id).then(res => {
+        if (res.data.is_delete) {
+          this.$message.success("delete all payments successfully");
+          this.loan.loanscheds = [];
+        }
+      });
+    },
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex % 2 === 1) {
         return "success-row";
@@ -392,26 +416,32 @@ export default {
       return "";
     },
     deleteScheds(index, id) {
-      this.isLoading = true
-      axios.delete("/api/v1/loanpaymentscheds/" + id).then(res => {
-        this.loan.loanscheds.splice(index, 1);
-       this.$message.success('Delete successfully')
-       this.isLoading = false
-      }).catch(err=>{
-        this.isLoading = flase
-           this.$message.error('there is an error please try again')
-      });
+      this.isLoading = true;
+      axios
+        .delete("/api/v1/loanpaymentscheds/" + id)
+        .then(res => {
+          this.loan.loanscheds.splice(index, 1);
+          this.$message.success("Delete successfully");
+          this.isLoading = false;
+        })
+        .catch(err => {
+          this.isLoading = flase;
+          this.$message.error("there is an error please try again");
+        });
     },
     deletePayment(id, index) {
-      this.isLoading = true
-      axios.delete("/api/v1/loanpayment/" + id).then(res => {
-        this.payments.splice(index, 1);
-       this.$message.success('Delete successfully')
-       this.isLoading = false
-      }).catch(err=>{
-           this.$message.error('there is an error please try again')
-           this.isLoading = false
-      });
+      this.isLoading = true;
+      axios
+        .delete("/api/v1/loanpayment/" + id)
+        .then(res => {
+          this.payments.splice(index, 1);
+          this.$message.success("Delete successfully");
+          this.isLoading = false;
+        })
+        .catch(err => {
+          this.$message.error("there is an error please try again");
+          this.isLoading = false;
+        });
     },
     printLoanDetails(obj) {
       var dd = {
@@ -444,7 +474,8 @@ export default {
                   "\n       Poblacion, Inabanga, Bohol",
 
                   {
-                    text: " \n      Mobile No: 09361224834\n     Tel.: 038-5120290",
+                    text:
+                      " \n      Mobile No: 09361224834\n     Tel.: 038-5120290",
                     bold: true,
                     fontSize: 10
                   },
@@ -571,14 +602,14 @@ export default {
               {
                 fontSize: 9,
                 width: 150,
-               
+
                 text: [
                   { text: `Client Signature: `, bold: true },
                   "_______________"
                 ]
               },
               {
-                 alignment: "center",
+                alignment: "center",
                 fontSize: 9,
                 width: 130,
                 text: [
@@ -587,7 +618,7 @@ export default {
                 ]
               },
               {
-                 alignment: "center",
+                alignment: "center",
                 fontSize: 9,
                 width: 130,
                 text: [
@@ -596,7 +627,7 @@ export default {
                 ]
               },
               {
-                 alignment: "center",
+                alignment: "center",
                 fontSize: 9,
                 width: 130,
                 text: [{ text: `_________________ \n`, bold: true }, "Date"]
@@ -739,8 +770,9 @@ export default {
           console.log(this.payments);
           totalint = totalint + parseFloat(this.payments[i].paid_interest);
           totalprin = totalprin + parseFloat(this.payments[i].paid_principal);
-          let date=new Date(this.payments[i].date_of_payment)
-          let fdate=`${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`
+          let date = new Date(this.payments[i].date_of_payment);
+          let fdate = `${date.getMonth() +
+            1}-${date.getDate()}-${date.getFullYear()}`;
           dd.content[8].table.body.push([
             { text: el.date, style: "tableHeader" },
             { text: el.principal, alignment: "right", style: "tableHeader" },
@@ -797,10 +829,25 @@ export default {
       });
       for (let i = 0; i < 15; i++) {
         dd.content[8].table.body.push([
-          { text: "-", style: "tableHeader",color:"white" },
-          { text: "-", alignment: "right", style: "tableHeader",color:"white" },
-          { text: "-", alignment: "right", style: "tableHeader",color:"white" },
-          { text: "-", alignment: "right", style: "tableHeader",color:"white" },
+          { text: "-", style: "tableHeader", color: "white" },
+          {
+            text: "-",
+            alignment: "right",
+            style: "tableHeader",
+            color: "white"
+          },
+          {
+            text: "-",
+            alignment: "right",
+            style: "tableHeader",
+            color: "white"
+          },
+          {
+            text: "-",
+            alignment: "right",
+            style: "tableHeader",
+            color: "white"
+          },
           { text: "", alignment: "right", style: "tableHeader" },
           { text: "", alignment: "right", style: "tableHeader" },
           { text: "", alignment: "right", style: "tableHeader" },
