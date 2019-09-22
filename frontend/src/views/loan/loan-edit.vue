@@ -278,7 +278,7 @@ export default {
           this.$message.error(
             "this member has outstanding balance in his/her loan"
           );
-          this.form.member = "";
+          //this.form.member = "";
         }
       }
     },
