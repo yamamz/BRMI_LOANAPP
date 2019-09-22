@@ -36,6 +36,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export default {
   data() {
     return {
+      totalinterestbal: 0,
+      totalprincipalbal: 0,
       days: [
         { code: 0, name: "Sun" },
         { code: 1, name: "Mon" },
@@ -70,7 +72,8 @@ export default {
         "balance",
         "action"
       ],
-      datas: []
+      datas: [],
+      origDatas:[]
     };
   },
   async created() {
@@ -78,9 +81,12 @@ export default {
       let res = await axios.get("/api/v1/loanss");
       //let loans=res.data.sort((a, b) => a.hasMotor > b.hasMotor ? -1 : (a.hasMotor < b.hasMotor ? 1 : 0))
       this.datas = res.data;
+
       this.datas.forEach(el => {
         el.account_number = el.member.account_number;
         el.fullname = `${el.member.lname}, ${el.member.fname}`;
+     
+
         let totalinterestPaid = 0;
         let totalprincipalpaid = 0;
 
@@ -89,11 +95,18 @@ export default {
           totalprincipalpaid =
             totalprincipalpaid + parseFloat(e.paid_principal);
         });
+        console.log(totalinterestPaid)
         el.balance =
           parseFloat(el.principal) +
           parseFloat(el.interest) -
           (totalinterestPaid + totalprincipalpaid);
+      
+          this.totalinterestbal = this.totalinterestbal + (parseFloat(el.interest) - totalinterestPaid)
+        this.totalprincipalbal = this.totalprincipalbal +(parseFloat(el.principal) - totalprincipalpaid)
+
+        console.log(totalinterestPaid)
       });
+      this.origDatas = this.datas
 
       this.datas = this.datas.filter(e => e.balance > 0);
       this.datas.forEach(el => {
@@ -128,6 +141,8 @@ export default {
       this.$router.push("/app/loan/loanpayment/" + id);
     },
     printLoanDetails() {
+
+
       var dd = {
         pageOrientation: "portrait",
         content: [
@@ -177,12 +192,11 @@ export default {
             style: "tableExample",
 
             table: {
-              widths: ['*','*', '*', 30, '*', '*','*'],
+              widths: ["*", "*", "*", 30, "*", "*", "*"],
               body: [
                 [
-                 
                   { text: "Fullname", bold: true, style: "tableHeader" },
-                     { text: "Term", bold: true, style: "tableHeader" },
+                  { text: "Term", bold: true, style: "tableHeader" },
                   { text: "Schedule", bold: true, style: "tableHeader" },
 
                   {
@@ -230,6 +244,36 @@ export default {
                   : "gray";
               }
             }
+          },
+          {
+            width: 180,
+            alignment: "right",
+            text: [
+              {
+                text:
+                  "Total Balance Interest Due : " +
+
+                  (this.totalinterestbal).toFixed(2),
+                fontSize: 9,
+                bold: true
+              },
+
+              {
+                text:
+                  "\n Total Balance Principal Due: " +
+                  (this.totalprincipalbal).toFixed(2),
+                bold: true,
+                fontSize: 9,
+                decoration: 'underline'
+              },
+              {
+                text:
+                  "\n Total: " +
+                  (this.totalprincipalbal + this.totalinterestbal).toFixed(2),
+                bold: true,
+                fontSize: 9
+              }
+            ]
           }
         ],
 
@@ -263,12 +307,17 @@ export default {
       let totalprin = 0;
       this.datas.forEach((el, i) => {
         dd.content[1].table.body.push([
-          
           { text: el.fullname, style: "tableHeader" },
-           { text: el.loan_period == 1?el.loan_period + ' Month':el.loan_period + ' Months', style: "tableHeader" },
+          {
+            text:
+              el.loan_period == 1
+                ? el.loan_period + " Month"
+                : el.loan_period + " Months",
+            style: "tableHeader"
+          },
           { text: el.schedule, alignment: "right", style: "tableHeader" },
           { text: el.loan_cycle, alignment: "right", style: "tableHeader" },
-           { text: el.date_release, alignment: "right", style: "tableHeader" },
+          { text: el.date_release, alignment: "right", style: "tableHeader" },
           {
             text: (parseFloat(el.interest) + parseFloat(el.principal)).toFixed(
               2
