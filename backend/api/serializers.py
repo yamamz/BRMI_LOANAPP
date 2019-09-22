@@ -68,6 +68,7 @@ class LoanSerializer(serializers.ModelSerializer):
 
 		instance.member = validated_data.get('member', instance.member)
 		instance.loan_type = validated_data.get('loan_type', instance.loan_type)
+		instance.loan_cycle = validated_data.get('loan_cycle', instance.loan_cycle)
 		instance.clustername = validated_data.get('clustername', instance.clustername)
 		instance.principal = validated_data.get('principal', instance.principal)
 		instance.interest = validated_data.get('interest', instance.interest)
