@@ -37,17 +37,17 @@ export default {
   data() {
     return {
       days: [
-        { code: 0, name: "Sunday" },
-        { code: 1, name: "Monday" },
-        { code: 2, name: "Tuesday" },
-        { code: 3, name: "Wednesday" },
-        { code: 4, name: "thursday" },
-        { code: 5, name: "Friday" },
-        { code: 6, name: "Saturday" }
+        { code: 0, name: "Sun" },
+        { code: 1, name: "Mon" },
+        { code: 2, name: "Tue" },
+        { code: 3, name: "Wed" },
+        { code: 4, name: "thu" },
+        { code: 5, name: "Fri" },
+        { code: 6, name: "Sat" }
       ],
       periods: [
         { code: 1, name: "weekly" },
-        { code: 2, name: "semi-monthly" },
+        { code: 2, name: "s-monthly" },
         { code: 3, name: "monthly" }
       ],
       loan_types: [
