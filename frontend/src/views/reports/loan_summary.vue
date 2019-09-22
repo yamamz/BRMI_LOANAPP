@@ -177,7 +177,7 @@ export default {
             style: "tableExample",
 
             table: {
-              widths: ['*','*', '*', '*', '*', '*','*'],
+              widths: ['*','*', '*', 30, '*', '*','*'],
               body: [
                 [
                   { text: "Acct. #", bold: true, style: "tableHeader" },
