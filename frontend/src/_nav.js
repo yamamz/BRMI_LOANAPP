@@ -58,7 +58,7 @@ export default {
       icon: 'icon-pie-chart',
       children: [{
 
-        name: 'Loan summary',
+        name: 'Loan with Balance Summary',
         url: '/app/reports/loan_summary_list',
         icon: 'icon-list'
 
