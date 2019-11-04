@@ -372,7 +372,7 @@ export default {
         { code: 1, name: "weekly" },
         { code: 2, name: "semi-monthly" },
         { code: 3, name: "monthly" },
-        { code: 4, name: "monthly" }
+        { code: 4, name: "daily" }
       ],
       loan_types: [
         { code: 1, name: "Diminishing" },
@@ -701,7 +701,7 @@ export default {
                     style: "tableHeader"
                   },
                   {
-                    text: "Interest Bal.",
+                    text: "Client Sig.",
                     alignment: "center",
                     bold: true,
                     style: "tableHeader"
@@ -1075,7 +1075,7 @@ export default {
 
   computed: {
     total_Due() {
-      let total = this.form.paid_principal + this.form.paid_interest;
+      let total = parseFloat(this.form.paid_principal) + parseFloat(this.form.paid_interest);
       this.form.total_monthly_due = total;
       return total;
     },

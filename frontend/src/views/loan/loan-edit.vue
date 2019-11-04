@@ -224,7 +224,8 @@ export default {
       periods: [
         { code: 1, name: "weekly" },
         { code: 2, name: "semi-monthly" },
-        { code: 3, name: "monthly" }
+        { code: 3, name: "monthly" },
+         { code: 4, name: "daily" }
       ],
       loan_types: [
         { code: 1, name: "Diminishing" },
@@ -360,7 +361,16 @@ export default {
             dateinc = 14;
             console.log("2");
             console.log(n);
-          } else {
+          } 
+          else if(this.form.payment_period == 4){
+              n = this.form.loan_period * 29;
+              interest_rate = this.form.interest_rate / 100 / 29;
+              dateinc = 1;
+              console.log("2");
+              console.log(n);
+              console.log("daily")
+            }
+          else {
             n = this.form.loan_period;
             interest_rate = this.form.interest_rate / 100;
             dateinc = 30;
@@ -446,7 +456,16 @@ export default {
 
             console.log("2");
             console.log(n);
-          } else {
+          }
+          else if(this.form.payment_period == 4){
+              n = this.form.loan_period * 29;
+              interest_rate = this.form.interest_rate / 100 / 29;
+              dateinc = 1;
+              console.log("2");
+              console.log(n);
+              console.log("daily")
+            }
+          else {
             n = this.form.loan_period;
             dateinc = 29;
 
